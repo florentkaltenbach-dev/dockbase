@@ -79,11 +79,11 @@ echo ""
 case "$TAG" in
     shop-db)
         echo "To import WordPress DB:"
-        echo "  docker compose exec -T mariadb mariadb -u root -p\$MYSQL_ROOT_PASSWORD stoneshop < ${TARGET_DIR}/.../stoneshop.sql"
+        echo "  docker compose exec -T mariadb mariadb -u root -p\$MYSQL_ROOT_PASSWORD \$MYSQL_DATABASE < ${TARGET_DIR}/.../\$MYSQL_DATABASE.sql"
         ;;
     db)
         echo "To import WordPress DB (legacy):"
-        echo "  docker compose exec -T mariadb mariadb -u root -p\$MYSQL_ROOT_PASSWORD stoneshop < ${TARGET_DIR}/backups/db/stoneshop.sql"
+        echo "  docker compose exec -T mariadb mariadb -u root -p\$MYSQL_ROOT_PASSWORD \$MYSQL_DATABASE < ${TARGET_DIR}/backups/db/\$MYSQL_DATABASE.sql"
         echo ""
         echo "To import Matomo DB (legacy — into matomo_shop):"
         echo "  docker compose exec -T mariadb mariadb -u root -p\$MYSQL_ROOT_PASSWORD matomo_shop < ${TARGET_DIR}/backups/db/matomo.sql"

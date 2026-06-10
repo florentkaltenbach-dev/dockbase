@@ -1,5 +1,5 @@
 -- Dockbase MariaDB initialization
--- WordPress 'stoneshop' database is created automatically via MYSQL_DATABASE env var.
+-- WordPress database is created automatically via MYSQL_DATABASE env var.
 
 -- Shop Matomo database and user
 CREATE DATABASE IF NOT EXISTS matomo_shop CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

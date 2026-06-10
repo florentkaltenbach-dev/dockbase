@@ -79,7 +79,7 @@ echo ""
 
 # ── Shop Domain ───────────────────────────────────────────
 echo "── Shop Domain ─────────────────────────"
-prompt SITE_DOMAIN "Shop domain" "stoneshop.example.com"
+prompt SITE_DOMAIN "Shop domain" "shop.example.com"
 SITE_DOMAIN="$REPLY"
 
 prompt OLD_DOMAIN "Old domain (for migration search-replace, leave empty to skip)" ""
@@ -88,7 +88,7 @@ echo ""
 
 # ── Mail ──────────────────────────────────────────────────
 echo "── Mail ──────────────────────────────────"
-prompt MAIL_HOSTNAME "Mail server hostname" "mail.fraefel.de"
+prompt MAIL_HOSTNAME "Mail server hostname" "mail.shop.example.com"
 MAIL_HOSTNAME="$REPLY"
 
 prompt MAILCOW_API_KEY "Mailcow API key (leave empty to auto-retrieve)" ""
@@ -101,10 +101,10 @@ MYSQL_ROOT_DEFAULT=$(gen_password)
 prompt MYSQL_ROOT_PASSWORD "MariaDB root password" "$MYSQL_ROOT_DEFAULT" true
 MYSQL_ROOT_PASSWORD="$REPLY"
 
-prompt MYSQL_DATABASE "WordPress DB name" "stoneshop"
+prompt MYSQL_DATABASE "WordPress DB name" "shop"
 MYSQL_DATABASE="$REPLY"
 
-prompt MYSQL_USER "WordPress DB user" "stoneshop"
+prompt MYSQL_USER "WordPress DB user" "shop"
 MYSQL_USER="$REPLY"
 
 MYSQL_PW_DEFAULT=$(gen_password)

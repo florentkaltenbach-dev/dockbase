@@ -1,8 +1,8 @@
 {
-    "name": "stoneshop/bedrock",
+    "name": "dockbase/bedrock",
     "type": "project",
     "license": "MIT",
-    "description": "StoneShop WooCommerce site",
+    "description": "Dockbase WooCommerce stack",
     "require": {
         "php": ">=8.2",
         "composer/installers": "^2.2",
@@ -24,8 +24,7 @@
         "wpackagist-plugin/woocommerce-paypal-payments": "^3.4",
         "wpackagist-plugin/woocommerce-services": "^3.5",
         "wpackagist-plugin/fluent-smtp": "^2.2",
-        "wpackagist-plugin/woocommerce-pdf-invoices-packing-slips": "^3.9",
-        "wpackagist-plugin/woocommerce-germanized": "^3.18"
+        "wpackagist-plugin/woocommerce-pdf-invoices-packing-slips": "^3.9"
     },
     "repositories": [
         {

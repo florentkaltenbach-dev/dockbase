@@ -1,4 +1,4 @@
-# StoneShop Secrets Inventory
+# Dockbase Secrets Inventory
 
 Every secret needed for the deployment. Transfer status tracks migration progress.
 
@@ -23,23 +23,23 @@ Every secret needed for the deployment. Transfer status tracks migration progres
 | RESTIC_REPOSITORY | Restic repo path on StorageBox | Old server .env | ☐ Copy from old server |
 | RESTIC_PASSWORD | Restic encryption password | Old server .env | ☐ Copy from old server |
 | CROWDSEC_ENROLL_KEY | CrowdSec console enrollment | Old server (find location) | ☐ Extract from old server |
-| WP_SMTP_HOST | Mailcow submission hostname (TLS CN match) | mail.fraefel.de | ☐ Default in config.env.example |
-| WP_SMTP_USER | Real mailbox auth user (aliases can't auth) | info@stoneshop.de | ☐ Provisioned by setup-mailcow.sh |
+| WP_SMTP_HOST | Mailcow submission hostname (TLS CN match) | mail.shop.example.com | ☐ Default in config.env.example |
+| WP_SMTP_USER | Real mailbox auth user (aliases can't auth) | info@shop.example.com | ☐ Provisioned by setup-mailcow.sh |
 | WP_SMTP_PASS | Mailbox password | /opt/mailcow/initial-passwords.txt on server | ☐ Auto-pulled by setup helpers |
-| WP_SMTP_FROM_EMAIL | "From" address WC uses | bestellungen@stoneshop.de | ☐ Default in config.env.example |
+| WP_SMTP_FROM_EMAIL | "From" address WC uses | orders@shop.example.com | ☐ Default in config.env.example |
 
 ## SSH keys
 
 | File | Description | Source | Transfer status |
 |------|-------------|--------|-----------------|
-| config/backup/backup_key | Ed25519 private key for StorageBox | Old server /opt/stoneshop/config/backup/backup_key | ☐ Copy (chmod 0600) |
+| config/backup/backup_key | Ed25519 private key for StorageBox | Old server /opt/dockbase/config/backup/backup_key | ☐ Copy (chmod 0600) |
 | ~deploy/.ssh/authorized_keys | Your SSH public key(s) | Your local machine | ☐ Place during harden.sh |
 
 ## SSH config (created by setup.sh)
 
 | File | Content | Created by |
 |------|---------|------------|
-| ~deploy/.ssh/config | Host storagebox alias → u518455.your-storagebox.de:23 using backup_key | setup.sh |
+| ~deploy/.ssh/config | Host storagebox alias → uXXXXXX.your-storagebox.de:23 using backup_key | setup.sh |
 | /root/.ssh/config | Same (root runs backup cron) | setup.sh |
 | ~deploy/.ssh/known_hosts | StorageBox host key | setup.sh (ssh-keyscan) |
 | /root/.ssh/known_hosts | StorageBox host key | setup.sh (ssh-keyscan) |
@@ -48,7 +48,7 @@ Every secret needed for the deployment. Transfer status tracks migration progres
 
 The CrowdSec enrollment key may not be in the current .env file. Before migration:
 
-1. On old server: `docker exec stoneshop_crowdsec cscli console status`
+1. On old server: `docker exec dockbase_crowdsec cscli console status`
 2. Check if the enrollment key is stored in a CrowdSec config file inside the container
 3. If found, add it to config.env as CROWDSEC_ENROLL_KEY
 4. If not recoverable, register a new enrollment via the CrowdSec console

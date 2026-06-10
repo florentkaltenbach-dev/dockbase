@@ -501,7 +501,7 @@ else
     ssh_as deploy "
         CRON_TMP=\$(mktemp)
         chmod 644 \"\$CRON_TMP\"
-        crontab -l 2>/dev/null | grep -v '/opt/dockbase/' | grep -v '/opt/stoneshop/' > \"\$CRON_TMP\" || true
+        crontab -l 2>/dev/null | grep -v '/opt/dockbase/' > \"\$CRON_TMP\" || true
         printf '${CRON_ENTRIES}' >> \"\$CRON_TMP\"
         crontab \"\$CRON_TMP\"
         rm -f \"\$CRON_TMP\"

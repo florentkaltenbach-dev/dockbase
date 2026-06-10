@@ -4,10 +4,11 @@
 
 A modular Docker deployment toolkit for multiple services on one Ubuntu 24.04 server. Stacks: WooCommerce shop (FrankenPHP + MariaDB + KeyDB + Matomo), Mailcow mail, and static website — all behind a shared Caddy reverse proxy.
 
-## Current phase: Multi-stack deployment
+## Template / overlay model
 
-See `DOCKBASE-PLAN-FINAL.md` for the canonical spec.
-See `docs/migration/` for legacy migration docs.
+This is the PUBLIC, generic template repo. Customer deployments live in PRIVATE overlay repos that branch from this one and add only their delta (domains.conf, mail-domains.conf, theme, customer mu-plugins, customer docs).
+
+**Upstream-first rule:** every change must be classified before committing. Generic stack/infra changes are committed HERE first, then merged down into overlays (`git merge upstream/main`). Customer-specific changes go only in the overlay repo. Never commit customer domains, names, or data to this repo.
 
 ## Hard rules
 
@@ -17,7 +18,7 @@ See `docs/migration/` for legacy migration docs.
 - **Idempotent scripts.** Every script in `infra/` must be safely re-runnable.
 - **No hardcoded domains.** Scripts read from config files, not inline strings.
 - **Regenerate Caddyfile after `domains.conf` changes.** Run `bash infra/generate-caddyfile.sh` and commit the output. Never hand-edit `config/caddy/Caddyfile`.
-- **No `steinmetz-mindelheim-shop.de`** anywhere in the implementation.
+- **No customer identifiers in this repo.** Domains, names, mailboxes, account IDs belong in overlay repos only.
 
 ## Repo structure
 

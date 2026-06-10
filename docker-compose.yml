@@ -6,8 +6,8 @@ services:
     env_file: ./config.env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: stoneshop
-      MYSQL_USER: stoneshop
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -118,8 +118,8 @@ services:
     user: "33:1100"
     env_file: ./config.env
     environment:
-      DB_NAME: stoneshop
-      DB_USER: stoneshop
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_HOST: mariadb
       WP_ENV: production
@@ -155,7 +155,7 @@ services:
       # SMTP relay to Mailcow's submission port (587) on the host. Use the
       # mail hostname (not host.docker.internal) so TLS cert CN matches.
       # Mailcow runs in a separate compose project not on dockbase-proxy.
-      - "mail.stoneshop.de:host-gateway"
+      - "${MAIL_HOSTNAME}:host-gateway"
       - "host.docker.internal:host-gateway"
     depends_on:
       mariadb:

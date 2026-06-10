@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe09f545899cc8462b4e340de8515034",
+    "content-hash": "c70f3373fcfdd14950d07863cdccbcbf",
     "packages": [
         {
             "name": "composer/installers",
@@ -1166,24 +1166,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/woocommerce/"
-        },
-        {
-            "name": "wpackagist-plugin/woocommerce-germanized",
-            "version": "3.20.7",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/woocommerce-germanized/",
-                "reference": "tags/3.20.7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woocommerce-germanized.3.20.7.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/woocommerce-germanized/"
         },
         {
             "name": "wpackagist-plugin/woocommerce-paypal-payments",

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: StoneShop SMTP Relay
+ * Plugin Name: Shop SMTP Relay
  * Description: Routes wp_mail through Mailcow's submission port using env-supplied credentials.
  * Version: 1.0.0
  */

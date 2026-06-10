@@ -21,7 +21,7 @@ if [ -f "$CONFIG_FILE" ]; then
 fi
 
 : "${SERVER_IP:=<SERVER_IP>}"
-: "${MAIL_HOSTNAME:=mail.fraefel.de}"
+: "${MAIL_HOSTNAME:=mail.shop.example.com}"
 
 # Collect web domains
 declare -A WEB_DOMAINS

@@ -1,4 +1,4 @@
-# StoneShop Known Issues
+# Dockbase Known Issues
 
 ## CRITICAL — Must fix before migration
 
@@ -8,15 +8,15 @@
 
 The CrowdSec enrollment key and any bouncer API keys may not be in the current .env file. They might have been set interactively or stored in a CrowdSec config file inside the container.
 
-**Fix:** On old server, run `docker exec stoneshop_crowdsec cscli console status` and check CrowdSec config. Extract the key and add to config.env.
+**Fix:** On old server, run `docker exec dockbase_crowdsec cscli console status` and check CrowdSec config. Extract the key and add to config.env.
 
 ### 3. Backup script must dump both databases
 
 **Status:** Not verified
 
-The current backup.sh may only dump the stoneshop database, not the matomo database.
+The current backup.sh may only dump the shop database, not the matomo database.
 
-**Fix:** Verify on old server. Update backup.sh to explicitly dump both `stoneshop` and `matomo` databases with separate tags if needed.
+**Fix:** Verify on old server. Update backup.sh to explicitly dump both `$MYSQL_DATABASE` and `matomo` databases with separate tags if needed.
 
 ## IMPORTANT — Address during migration
 

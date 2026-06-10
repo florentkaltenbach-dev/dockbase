@@ -32,7 +32,7 @@ while IFS= read -r line; do
     domain=$(echo "$line" | awk '{print $1}')
     backend=$(echo "$line" | awk '{print $2}')
     [ -z "$domain" ] || [ -z "$backend" ] && continue
-    # Redirects are grouped by target: redirect:fraefel.de
+    # Redirects are grouped by target: redirect:example.com
     BACKEND_DOMAINS["$backend"]+="${domain} "
 done < "$DOMAINS_FILE"
 

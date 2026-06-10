@@ -1,0 +1,15 @@
+# Web routing: domain -> backend
+# Used by: infra/generate-caddyfile.sh
+# Backends: shop, website, mailweb, matomo-shop, matomo-web, redirect:<target>
+# Add a line, run generate-caddyfile.sh, reload Caddy.
+#
+# Copy to domains.conf in your overlay repo and fill in real domains.
+
+shop.example.com                shop
+www.shop.example.com            shop
+example.com                     website
+www.example.com                 website
+old-domain.example.org          redirect:shop.example.com
+mail.shop.example.com           mailweb
+matomo.shop.example.com         matomo-shop
+matomo.example.com              matomo-web

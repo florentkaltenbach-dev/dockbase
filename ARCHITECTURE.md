@@ -1,8 +1,8 @@
-# StoneShop Architecture
+# Dockbase Architecture
 
 ## Overview
 
-StoneShop is a WooCommerce shop deployed as a Docker Compose stack on a single Hetzner VPS running Ubuntu 24.04 LTS. The server is hardened at the OS level and exposes SSH (22), HTTP (80), and HTTPS (443).
+Dockbase is a WooCommerce shop deployed as a Docker Compose stack on a single Hetzner VPS running Ubuntu 24.04 LTS. The server is hardened at the OS level and exposes SSH (22), HTTP (80), and HTTPS (443).
 
 ## Network flow
 
@@ -43,7 +43,7 @@ Internet → :443 → Docker → FrankenPHP (HTTPS + HTTP/3 via QUIC)
 
 ### 2. MariaDB
 
-- Hosts two databases: `stoneshop` (WordPress) and `matomo`
+- Hosts two databases: `$MYSQL_DATABASE` (WordPress) and `matomo`
 - Healthcheck: `mariadmin ping`
 - Data in named volume `mariadb_data`
 
@@ -62,7 +62,7 @@ Internet → :443 → Docker → FrankenPHP (HTTPS + HTTP/3 via QUIC)
 
 ### 5. CrowdSec
 
-- Reads Caddy access logs from bind-mounted /opt/stoneshop/logs/
+- Reads Caddy access logs from bind-mounted /opt/dockbase/logs/
 - Enrollment key stored in config.env
 
 ### Internal connections
@@ -70,7 +70,7 @@ Internet → :443 → Docker → FrankenPHP (HTTPS + HTTP/3 via QUIC)
 - FrankenPHP → MariaDB (TCP 3306)
 - FrankenPHP → KeyDB (TCP 6379)
 - Matomo → MariaDB (TCP 3306)
-- CrowdSec reads /opt/stoneshop/logs/ (bind mount, read-only)
+- CrowdSec reads /opt/dockbase/logs/ (bind mount, read-only)
 
 ## Volumes and bind mounts
 
@@ -91,12 +91,12 @@ Internet → :443 → Docker → FrankenPHP (HTTPS + HTTP/3 via QUIC)
 
 - `web/app/uploads/` — ~6.6GB product images and media
 - `web/app/languages/` — ~50MB translation files
-- `mariadb_data` (named volume) — SQL dump of stoneshop + matomo databases
+- `mariadb_data` (named volume) — SQL dump of shop + matomo databases
 - `matomo_data` (named volume) — Matomo config and processed reports
 
 ### Host-level
 
-- `/opt/stoneshop/logs/` — Caddy access/error logs, read by CrowdSec, logrotated daily
+- `/opt/dockbase/logs/` — Caddy access/error logs, read by CrowdSec, logrotated daily
 
 ### Secrets (manual transfer)
 
@@ -109,7 +109,7 @@ Internet → :443 → Docker → FrankenPHP (HTTPS + HTTP/3 via QUIC)
 
 | Tag | Content | Source |
 |-----|---------|--------|
-| db | SQL dump of stoneshop + matomo databases | `docker exec` mariadump |
+| db | SQL dump of shop + matomo databases | `docker exec` mariadump |
 | uploads | web/app/uploads/ | Bind mount |
 | languages | web/app/languages/ | Bind mount |
 | matomo | matomo_data volume contents | `docker run --rm` tar export |
@@ -131,8 +131,8 @@ Daily at 04:30. Script waits for all containers healthy (5-minute timeout) befor
 | Time | Task | Script |
 |------|------|--------|
 | 03:00 | Unattended-upgrades reboot window | systemd (auto) |
-| 04:00 | WP core + plugin + theme updates | /opt/stoneshop/scripts/wp-update.sh |
-| 04:30 | Restic backup to StorageBox | /opt/stoneshop/config/backup/scripts/backup.sh |
+| 04:00 | WP core + plugin + theme updates | /opt/dockbase/scripts/wp-update.sh |
+| 04:30 | Restic backup to StorageBox | /opt/dockbase/config/backup/scripts/backup.sh |
 
 ## DNS
 

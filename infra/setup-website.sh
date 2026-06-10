@@ -22,8 +22,8 @@ if [ ! -f "${WEBSITE_DIR}/index.html" ]; then
     cat > "${WEBSITE_DIR}/index.html" <<'HTML'
 <!DOCTYPE html>
 <html lang="de">
-<head><meta charset="utf-8"><title>Natursteindesign Fraefel</title></head>
-<body><h1>Natursteindesign Fraefel</h1><p>Website coming soon.</p></body>
+<head><meta charset="utf-8"><title>Coming Soon</title></head>
+<body><h1>Coming Soon</h1><p>Website coming soon.</p></body>
 </html>
 HTML
     log_info "Placed placeholder index.html"

@@ -1,4 +1,4 @@
-# StoneShop Decisions Log
+# Dockbase Decisions Log
 
 Format: date, decision, reasoning, status.
 
@@ -98,7 +98,7 @@ Tarball: 374 MB, sha256
 
 ## 2026-03-17: Public GitHub repo
 
-**Decision:** The stoneshop repo is public. Bootstrap scripts are curl-able from raw.githubusercontent.com.
+**Decision:** The dockbase template repo is public. Bootstrap scripts are curl-able from raw.githubusercontent.com.
 **Reasoning:** Enables one-click setup on a fresh server without needing deploy keys or tokens for the initial clone. Secrets are never committed — they live in config.env (git-ignored).
 **Status:** Not started
 

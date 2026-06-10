@@ -1,0 +1,16 @@
+# Mail domains and mailboxes
+# Used by: infra/setup-mailcow.sh (adds domains + mailboxes + aliases via Mailcow API)
+# Used by: infra/dns-records.sh (outputs MX/SPF/DKIM/DMARC records)
+#
+# Format:
+#   [domain]
+#   localpart      Display Name           # creates a real mailbox
+#   @localpart     target@otherdomain     # creates an alias forwarding to target
+#
+# Add a domain section, re-run setup-mailcow.sh (idempotent — skips existing).
+#
+# Copy to mail-domains.conf in your overlay repo and fill in real domains.
+
+[shop.example.com]
+info        Shop Info
+@orders     info@shop.example.com

@@ -130,9 +130,9 @@ else
             log_info "Restoring database (legacy tag: db)..."
             DB_TMP=$(make_tmp)
             run_restic --retry-lock 5m restore latest --tag db --target "$DB_TMP"
-            if [ -f "$DB_TMP/backups/db/stoneshop.sql" ]; then
-                docker exec -i "$DB_CONTAINER" mariadb -u root -p"$MYSQL_ROOT_PASSWORD" stoneshop \
-                    < "$DB_TMP/backups/db/stoneshop.sql"
+            if [ -f "$DB_TMP/backups/db/${MYSQL_DATABASE}.sql" ]; then
+                docker exec -i "$DB_CONTAINER" mariadb -u root -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE" \
+                    < "$DB_TMP/backups/db/${MYSQL_DATABASE}.sql"
                 log_info "WordPress database imported."
             fi
             # Legacy matomo dump goes into matomo_shop
@@ -157,13 +157,13 @@ else
             log_info "Restoring shop-db..."
             DB_TMP=$(make_tmp)
             run_restic --retry-lock 5m restore latest --tag shop-db --target "$DB_TMP"
-            SHOP_SQL=$(find "$DB_TMP" -name "stoneshop.sql" | head -1)
+            SHOP_SQL=$(find "$DB_TMP" -name "${MYSQL_DATABASE}.sql" | head -1)
             if [ -z "$SHOP_SQL" ]; then
-                log_error "shop-db snapshot restored but stoneshop.sql not found in ${DB_TMP}"
+                log_error "shop-db snapshot restored but ${MYSQL_DATABASE}.sql not found in ${DB_TMP}"
                 log_error "Contents: $(ls -la "$DB_TMP" 2>/dev/null || true)"
                 exit 1
             fi
-            docker exec -i "$DB_CONTAINER" mariadb -u root -p"$MYSQL_ROOT_PASSWORD" stoneshop < "$SHOP_SQL"
+            docker exec -i "$DB_CONTAINER" mariadb -u root -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE" < "$SHOP_SQL"
             log_info "WordPress database imported."
 
             log_info "Restoring shop-files..."
@@ -310,5 +310,5 @@ if mode_includes web; then
     log_info "Verify website: check domains in config/domains.conf"
 fi
 if mode_includes mail; then
-    log_info "Verify mail: curl -I https://${MAIL_HOSTNAME:-mail.fraefel.de}"
+    log_info "Verify mail: curl -I https://${MAIL_HOSTNAME:-mail.shop.example.com}"
 fi

@@ -1,6 +1,6 @@
-# StoneShop
+# Dockbase
 
-A WooCommerce shop running on Docker — FrankenPHP (Caddy + PHP), MariaDB, Redis, Matomo, and CrowdSec. Designed for one-click deployment to a fresh Ubuntu 24.04 server.
+A reusable WooCommerce shop stack running on Docker — FrankenPHP (Caddy + PHP), MariaDB, Redis, Matomo, and CrowdSec. Designed for one-click deployment to a fresh Ubuntu 24.04 server.
 
 ## Quick start
 
@@ -8,7 +8,7 @@ On a fresh Ubuntu 24.04 server (tested on Hetzner), SSH in as root and run:
 
 ```bash
 # Phase 1: Harden the server
-curl -sSL https://raw.githubusercontent.com/florentkaltenbach-dev/stoneshop/main/infra/harden.sh | bash
+curl -sSL https://raw.githubusercontent.com/florentkaltenbach-dev/dockbase/main/infra/harden.sh | bash
 reboot
 ```
 
@@ -16,18 +16,18 @@ Reconnect as `deploy` (the script creates this user and copies your SSH keys):
 
 ```bash
 # Phase 2: Install Docker and deploy the stack
-sudo bash -c 'curl -sSL https://raw.githubusercontent.com/florentkaltenbach-dev/stoneshop/main/infra/setup.sh | bash'
+sudo bash -c 'curl -sSL https://raw.githubusercontent.com/florentkaltenbach-dev/dockbase/main/infra/setup.sh | bash'
 ```
 
 The script will pause and ask you to place two files:
 
-1. **`/opt/stoneshop/config.env`** — copy from `config.env.example` and fill in real values
-2. **`/opt/stoneshop/config/backup/backup_key`** — your StorageBox SSH private key (chmod 0600)
+1. **`/opt/dockbase/config.env`** — copy from `config.env.example` and fill in real values
+2. **`/opt/dockbase/config/backup/backup_key`** — your StorageBox SSH private key (chmod 0600)
 
 Then import data from a Restic backup:
 
 ```bash
-cd /opt/stoneshop && sudo bash infra/import.sh
+cd /opt/dockbase && sudo bash infra/import.sh
 ```
 
 Point your DNS A records to the server IP and the site is live.
@@ -49,7 +49,7 @@ Point your DNS A records to the server IP and the site is live.
 
 - Installs Docker CE, Compose, Buildx
 - Installs restic, git, rsync
-- Clones this repo to `/opt/stoneshop/`
+- Clones this repo to `/opt/dockbase/`
 - Creates `.env` symlink → `config.env`
 - Sets up StorageBox SSH config and known_hosts
 - Builds and starts all 5 Docker services

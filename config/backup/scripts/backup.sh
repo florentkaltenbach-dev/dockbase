@@ -69,6 +69,7 @@ if ! flock -n 200; then
     exit 0
 fi
 
+load_env_var MYSQL_DATABASE
 load_env_var MYSQL_ROOT_PASSWORD
 load_env_var RESTIC_REPOSITORY
 load_env_var RESTIC_PASSWORD
@@ -121,11 +122,11 @@ restic unlock >> "$LOG_FILE" 2>&1 || true
 if mode_includes shop; then
     log "=== Shop backup ==="
 
-    # shop-db: SQL dump of stoneshop database
+    # shop-db: SQL dump of the shop database
     mkdir -p "${TMP_BACKUP}/shop-db"
-    log "Dumping stoneshop database..."
+    log "Dumping shop database..."
     docker compose exec -T mariadb mariadb-dump -u root -p"$MYSQL_ROOT_PASSWORD" \
-        --single-transaction stoneshop > "${TMP_BACKUP}/shop-db/stoneshop.sql" 2>> "$LOG_FILE"
+        --single-transaction "$MYSQL_DATABASE" > "${TMP_BACKUP}/shop-db/${MYSQL_DATABASE}.sql" 2>> "$LOG_FILE"
     restic --retry-lock 5m backup "${TMP_BACKUP}/shop-db/" --tag shop-db >> "$LOG_FILE" 2>&1
 
     # shop-files: uploads + languages

@@ -12,7 +12,7 @@ source "${SCRIPT_DIR}/lib/common.sh"
 
 require_root
 
-REPO_URL="https://github.com/florentkaltenbach-dev/stoneshop.git"
+REPO_URL="${REPO_URL:-https://github.com/florentkaltenbach-dev/dockbase.git}"
 
 echo "=== Dockbase Setup ==="
 
