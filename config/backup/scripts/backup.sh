@@ -118,6 +118,22 @@ log "Starting backup (mode: ${DEPLOY_MODE})..."
 # Clean stale remote locks
 restic unlock >> "$LOG_FILE" 2>&1 || true
 
+# ── Infra config (always) ────────────────────────────────
+# Host-local-only files needed to restore the stack. Tiny snapshot.
+# Includes the load-bearing secrets for backup recovery itself
+# (RESTIC_PASSWORD, storagebox SSH key); those values MUST also live in
+# an off-host password manager — otherwise restoring from this snapshot
+# requires data only this snapshot contains.
+log "=== Infra config ==="
+mkdir -p "${TMP_BACKUP}/infra"
+cp /opt/dockbase/config.env "${TMP_BACKUP}/infra/"
+cp /opt/dockbase/config/backup/backup_key "${TMP_BACKUP}/infra/" 2>> "$LOG_FILE" || true
+if [ -r /opt/mailcow/mailcow.conf ]; then
+    cp /opt/mailcow/mailcow.conf "${TMP_BACKUP}/infra/" 2>> "$LOG_FILE" || true
+fi
+crontab -l > "${TMP_BACKUP}/infra/deploy.crontab" 2>> "$LOG_FILE" || true
+restic --retry-lock 5m backup "${TMP_BACKUP}/infra/" --tag infra >> "$LOG_FILE" 2>&1
+
 # ── Shop backup (if mode is full or shop) ────────────────
 if mode_includes shop; then
     log "=== Shop backup ==="
