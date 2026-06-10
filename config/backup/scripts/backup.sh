@@ -14,7 +14,7 @@ fi
 
 cd /opt/dockbase
 
-LOG_FILE="logs/backup.log"
+LOG_FILE="/opt/dockbase/logs/backup.log"
 LOCK_FILE="/var/lock/dockbase-backup.lock"
 TMP_BACKUP="/tmp/dockbase-backup-$$"
 
